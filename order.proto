@@ -1,0 +1,21 @@
+syntax = "proto3";
+option go_package = "crudservice/proto";
+
+message OrderRequest{
+  string id = 1;
+  string name = 2;
+  int32 price = 3;
+}
+
+message OrderResponse{
+  string serverMessage = 1;
+}
+
+service order{
+
+  rpc CreateOrder(OrderRequest) returns (OrderResponse);
+  rpc UpdateOrder(OrderRequest) returns (OrderResponse);
+  rpc ReadOrder(OrderRequest) returns (OrderResponse);
+  rpc DeleteOrder(OrderRequest) returns (OrderResponse);
+
+}
