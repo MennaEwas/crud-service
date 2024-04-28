@@ -132,10 +132,9 @@ func main() {
 	//starting http server
 	r := gin.Default()
 	// create new functions to list all requests
-	r.GET("/order", handler.ReadAllHandler)
 	r.POST("/order", handler.CreateOrder)
 	r.GET("/order/:id", handler.ReadByID)
-	r.PATCH("/order/:id", handler.UpdateOrder)
+	r.PUT("/order/:id", handler.UpdateOrder)
 	r.DELETE("/order/:id", handler.DeleteOrder)
 
 	err = r.Run(":8085")
