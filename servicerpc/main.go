@@ -5,28 +5,11 @@ import (
 	"crudservice/handler"
 	"crudservice/proto"
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"google.golang.org/grpc"
 	"log"
 	"net"
 	"os"
 )
-
-func Inithttp() {
-	r := gin.Default()
-	// create new functions to list all requests
-	r.POST("/order", handler.CreateOrder)
-	r.GET("/order/:id", handler.ReadByID)
-	r.PUT("/order/:id", handler.UpdateOrder)
-	r.DELETE("/order/:id", handler.DeleteOrder)
-	err := r.Run(":8085")
-	if err != nil {
-		fmt.Printf("Mooseeba %v", err)
-		return
-	} else {
-	}
-	fmt.Println("Server succesfully started on port 8085")
-}
 
 func main() {
 
@@ -57,13 +40,10 @@ func main() {
 	service := &handler.MyOrderServer{}
 	//takes register and server
 	proto.RegisterOrderServer(ServerRegister, service)
-	go func() {
-		err = ServerRegister.Serve(lis)
-		if err != nil {
-			log.Fatalf("A7eeh %s", err)
-		}
-	}()
+	err = ServerRegister.Serve(lis)
+	if err != nil {
+		log.Fatalf("A7eeh %s", err)
+	}
 	//starting http server
-	Inithttp()
 
 }
