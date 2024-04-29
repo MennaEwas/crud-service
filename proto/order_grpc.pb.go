@@ -25,7 +25,7 @@ type OrderClient interface {
 	CreateOrder(ctx context.Context, in *OrderCreateRequest, opts ...grpc.CallOption) (*OrderResponse, error)
 	UpdateOrder(ctx context.Context, in *OrderUpdateRequest, opts ...grpc.CallOption) (*OrderResponse, error)
 	ReadOrder(ctx context.Context, in *OrderReadRequest, opts ...grpc.CallOption) (*OrderResponse, error)
-	DeleteOrder(ctx context.Context, in *OrderDeleteRequest, opts ...grpc.CallOption) (*OrderResponse, error)
+	DeleteOrder(ctx context.Context, in *OrderDeleteRequest, opts ...grpc.CallOption) (*OrderDeleteResponse, error)
 }
 
 type orderClient struct {
@@ -63,8 +63,8 @@ func (c *orderClient) ReadOrder(ctx context.Context, in *OrderReadRequest, opts 
 	return out, nil
 }
 
-func (c *orderClient) DeleteOrder(ctx context.Context, in *OrderDeleteRequest, opts ...grpc.CallOption) (*OrderResponse, error) {
-	out := new(OrderResponse)
+func (c *orderClient) DeleteOrder(ctx context.Context, in *OrderDeleteRequest, opts ...grpc.CallOption) (*OrderDeleteResponse, error) {
+	out := new(OrderDeleteResponse)
 	err := c.cc.Invoke(ctx, "/order/DeleteOrder", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -79,7 +79,7 @@ type OrderServer interface {
 	CreateOrder(context.Context, *OrderCreateRequest) (*OrderResponse, error)
 	UpdateOrder(context.Context, *OrderUpdateRequest) (*OrderResponse, error)
 	ReadOrder(context.Context, *OrderReadRequest) (*OrderResponse, error)
-	DeleteOrder(context.Context, *OrderDeleteRequest) (*OrderResponse, error)
+	DeleteOrder(context.Context, *OrderDeleteRequest) (*OrderDeleteResponse, error)
 	mustEmbedUnimplementedOrderServer()
 }
 
@@ -96,7 +96,7 @@ func (UnimplementedOrderServer) UpdateOrder(context.Context, *OrderUpdateRequest
 func (UnimplementedOrderServer) ReadOrder(context.Context, *OrderReadRequest) (*OrderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ReadOrder not implemented")
 }
-func (UnimplementedOrderServer) DeleteOrder(context.Context, *OrderDeleteRequest) (*OrderResponse, error) {
+func (UnimplementedOrderServer) DeleteOrder(context.Context, *OrderDeleteRequest) (*OrderDeleteResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteOrder not implemented")
 }
 func (UnimplementedOrderServer) mustEmbedUnimplementedOrderServer() {}

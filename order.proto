@@ -21,7 +21,7 @@ message OrderDeleteRequest{
   string id = 1;
 }
 
-message OrderResponse{
+message OrderDeleteResponse{
   enum FailureCode {
     GENERAL_ERROR = 0;
     INVALID_REQUEST = 1;
@@ -37,11 +37,31 @@ message OrderResponse{
   }
 }
 
+message OrderResponse{
+  enum FailureCode {
+    GENERAL_ERROR = 0;
+    INVALID_REQUEST = 1;
+  }
+  message Success {
+    string id = 1;
+    string name= 2;
+    int32 price=3;
+  }
+  message Failure{
+    FailureCode failureCode = 1;
+    string failureMessage = 2;
+  }
+  oneof Result{
+    Success success = 1;
+    Failure failure = 2;
+  }
+}
+
 service order{
 
   rpc CreateOrder(OrderCreateRequest) returns (OrderResponse);
   rpc UpdateOrder(OrderUpdateRequest) returns (OrderResponse);
   rpc ReadOrder(OrderReadRequest) returns (OrderResponse);
-  rpc DeleteOrder(OrderDeleteRequest) returns (OrderResponse);
+  rpc DeleteOrder(OrderDeleteRequest) returns (OrderDeleteResponse);
 
 }
