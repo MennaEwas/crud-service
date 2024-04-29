@@ -35,7 +35,8 @@ func ReadByID(c *gin.Context) {
 
 	err := cursor.Decode(&order)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "not order found"})
+		c.JSON(http.StatusNotFound, gin.H{"error": "no order found"})
+		return
 	}
 	fmt.Println(order)
 

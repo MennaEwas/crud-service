@@ -1,21 +1,47 @@
 syntax = "proto3";
 option go_package = "crudservice/proto";
 
-message OrderRequest{
+
+message OrderCreateRequest{
+  string name = 2;
+  int32 price = 3;
+}
+
+message OrderReadRequest{
+  string id = 1;
+}
+
+message OrderUpdateRequest{
   string id = 1;
   string name = 2;
   int32 price = 3;
 }
 
+message OrderDeleteRequest{
+  string id = 1;
+}
+
 message OrderResponse{
-  string serverMessage = 1;
+  enum FailureCode {
+    GENERAL_ERROR = 0;
+    INVALID_REQUEST = 1;
+  }
+  message Success {}
+  message Failure{
+    FailureCode failureCode = 1;
+    string failureMessage = 2;
+  }
+  oneof Result{
+    Success success = 1;
+    Failure failure = 2;
+  }
 }
 
 service order{
 
-  rpc CreateOrder(OrderRequest) returns (OrderResponse);
-  rpc UpdateOrder(OrderRequest) returns (OrderResponse);
-  rpc ReadOrder(OrderRequest) returns (OrderResponse);
-  rpc DeleteOrder(OrderRequest) returns (OrderResponse);
+  rpc CreateOrder(OrderCreateRequest) returns (OrderResponse);
+  rpc UpdateOrder(OrderUpdateRequest) returns (OrderResponse);
+  rpc ReadOrder(OrderReadRequest) returns (OrderResponse);
+  rpc DeleteOrder(OrderDeleteRequest) returns (OrderResponse);
 
 }
