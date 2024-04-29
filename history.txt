@@ -1,0 +1,16 @@
+  789  mongo
+  790  mongod
+  791  ls
+  792  ls -la
+  793  open .zshrc
+  794  go get go.mongodb.org/mongo-driver/mongo
+  795  mongodb
+  796  mongodb
+  797  mongod
+  798  sudo lsof -i -P | grep LISTEN | grep :27017
+  799  git fetch
+  800  git merge
+  801  git add .
+  802  git commit -m "service added"
+  803  git pull origin main
+  804  git pull origin main
